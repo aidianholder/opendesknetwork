@@ -27,6 +27,13 @@ function odn_initialize_site( $site, $args ) {
 		switch_theme( ODN_DEFAULT_THEME );
 	}
 
+	// Core starts subdomain sites on http (it can't assume a wildcard certificate).
+	// Every site here gets its own certificate, so follow the main site's scheme.
+	if ( 'https' === wp_parse_url( get_home_url( get_main_site_id() ), PHP_URL_SCHEME ) ) {
+		update_option( 'home', set_url_scheme( get_option( 'home' ), 'https' ) );
+		update_option( 'siteurl', set_url_scheme( get_option( 'siteurl' ), 'https' ) );
+	}
+
 	if ( ! empty( $args['user_id'] ) && ! is_super_admin( $args['user_id'] ) ) {
 		$owner = new WP_User( $args['user_id'] );
 		$owner->set_role( 'publisher' );
