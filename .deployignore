@@ -17,8 +17,6 @@
 /object-cache.php
 /wp-content/advanced-cache.php
 /advanced-cache.php
-/wp-content/mu-plugins/index.php
-/mu-plugins/index.php
 
 # Runtime data written by WordPress.
 /wp-content/uploads/
