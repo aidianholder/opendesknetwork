@@ -21,7 +21,8 @@ class ODN_Publisher_Command {
 	 * : Subdomain for the site, e.g. "janedoe" for janedoe.<network domain>.
 	 *
 	 * <email>
-	 * : The journalist's email. An existing user with this email is reused.
+	 * : The journalist's email. If a user already has it, they're reused only
+	 * when their login matches --username (default: the subdomain).
 	 *
 	 * [--name=<display-name>]
 	 * : Display name for a new user. Defaults to the subdomain.
@@ -71,14 +72,18 @@ class ODN_Publisher_Command {
 			WP_CLI::error( "A site already exists at {$domain}." );
 		}
 
-		$name = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $subdomain );
-		$user = get_user_by( 'email', $email );
+		$name  = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $subdomain );
+		$login = WP_CLI\Utils\get_flag_value( $assoc_args, 'username', $subdomain );
+		$user  = get_user_by( 'email', $email );
 
 		if ( $user ) {
+			// Only reuse an account when it's the one asked for, not merely one sharing the email.
+			if ( $user->user_login !== $login ) {
+				WP_CLI::error( "{$email} already belongs to user '{$user->user_login}'. Pass --username={$user->user_login} to make them the publisher, or use a different email." );
+			}
 			WP_CLI::log( "Using existing user {$user->user_login} (#{$user->ID})." );
 			$user_id = $user->ID;
 		} else {
-			$login = WP_CLI\Utils\get_flag_value( $assoc_args, 'username', $subdomain );
 			if ( username_exists( $login ) ) {
 				WP_CLI::error( "Username '{$login}' is taken. Pass --username." );
 			}
