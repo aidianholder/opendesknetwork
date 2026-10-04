@@ -1,0 +1,40 @@
+# Server paths a Pressable deploy must leave alone (gitignore syntax).
+#
+# Pressable copies this repo's wp-content/ over the site's wp-content/ and
+# deletes what the repo doesn't contain. Anything matched here is neither
+# deployed nor deleted, so never list a path the repo ships (themes/odn,
+# mu-plugins/odn-network*).
+#
+# Each path is listed both relative to the repo root and relative to the
+# deployed wp-content/ directory, so it holds whichever base Pressable applies.
+
+# Plugins are installed by network admins from the dashboard, not from git.
+/wp-content/plugins/
+/plugins/
+
+# Pressable's drop-ins.
+/wp-content/object-cache.php
+/object-cache.php
+/wp-content/advanced-cache.php
+/advanced-cache.php
+/wp-content/mu-plugins/index.php
+/mu-plugins/index.php
+
+# Runtime data written by WordPress.
+/wp-content/uploads/
+/uploads/
+/wp-content/upgrade/
+/upgrade/
+/wp-content/upgrade-temp-backup/
+/upgrade-temp-backup/
+/wp-content/languages/
+/languages/
+/wp-content/fonts/
+/fonts/
+/wp-content/cache/
+/cache/
+
+# Repo-only files.
+/bin/
+/README.md
+/.gitignore

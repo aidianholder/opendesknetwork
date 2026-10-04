@@ -1,0 +1,82 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Ink",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"name": "Paper",
+					"color": "#1D2919"
+				},
+				{
+					"slug": "contrast",
+					"name": "Ink",
+					"color": "#F4F1E8"
+				},
+				{
+					"slug": "accent",
+					"name": "Accent",
+					"color": "#F5BF4A"
+				},
+				{
+					"slug": "highlight",
+					"name": "Red",
+					"color": "#F5BF4A"
+				},
+				{
+					"slug": "base-2",
+					"name": "White",
+					"color": "#253321"
+				},
+				{
+					"slug": "muted",
+					"name": "Grey",
+					"color": "#A9B0A5"
+				},
+				{
+					"slug": "subtle",
+					"name": "Light Grey",
+					"color": "#3A4836"
+				},
+				{
+					"slug": "accent-dark",
+					"name": "Accent Dark",
+					"color": "#C08910"
+				},
+				{
+					"slug": "on-accent",
+					"name": "On Accent",
+					"color": "#1D2919"
+				},
+				{
+					"slug": "highlight-dark",
+					"name": "Deep Red",
+					"color": "#F5BF4A"
+				},
+				{
+					"slug": "deep",
+					"name": "Desk Green",
+					"color": "#111A0F"
+				},
+				{
+					"slug": "on-deep",
+					"name": "On Desk Green",
+					"color": "#F4F1E8"
+				}
+			]
+		}
+	},
+	"styles": {
+		"elements": {
+			"link": {
+				":hover": {
+					"color": {
+						"text": "var:preset|color|contrast"
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,71 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Newsroom Grey",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"name": "Paper",
+					"color": "#FFFFFF"
+				},
+				{
+					"slug": "contrast",
+					"name": "Ink",
+					"color": "#1D2919"
+				},
+				{
+					"slug": "accent",
+					"name": "Accent",
+					"color": "#D0D0D0"
+				},
+				{
+					"slug": "highlight",
+					"name": "Red",
+					"color": "#ED1C24"
+				},
+				{
+					"slug": "base-2",
+					"name": "White",
+					"color": "#F4F4F4"
+				},
+				{
+					"slug": "muted",
+					"name": "Grey",
+					"color": "#7B7B7B"
+				},
+				{
+					"slug": "subtle",
+					"name": "Light Grey",
+					"color": "#D0D0D0"
+				},
+				{
+					"slug": "accent-dark",
+					"name": "Accent Dark",
+					"color": "#7B7B7B"
+				},
+				{
+					"slug": "on-accent",
+					"name": "On Accent",
+					"color": "#1D2919"
+				},
+				{
+					"slug": "highlight-dark",
+					"name": "Deep Red",
+					"color": "#70060A"
+				},
+				{
+					"slug": "deep",
+					"name": "Desk Green",
+					"color": "#3B3B3B"
+				},
+				{
+					"slug": "on-deep",
+					"name": "On Desk Green",
+					"color": "#FFFFFF"
+				}
+			]
+		}
+	}
+}

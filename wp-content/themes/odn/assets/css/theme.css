@@ -1,0 +1,163 @@
+/**
+ * Open Desk Network — styles theme.json can't express.
+ * Loaded on the front end and in the editor.
+ */
+
+/* Paper grain, as in the brand sheet. */
+body {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+	outline: 3px solid var(--wp--preset--color--accent);
+	outline-offset: 2px;
+}
+
+/* ---------- Block styles ---------- */
+
+/* Torn paper edge (bottom). Masks the block's bottom edge. */
+.is-style-torn-edge {
+	--odn-tear: 18px;
+	-webkit-mask:
+		url(../images/torn-edge.svg) bottom left / 600px var(--odn-tear) repeat-x,
+		linear-gradient(#000 0 0) top left / 100% calc(100% - var(--odn-tear) + 1px) no-repeat;
+	mask:
+		url(../images/torn-edge.svg) bottom left / 600px var(--odn-tear) repeat-x,
+		linear-gradient(#000 0 0) top left / 100% calc(100% - var(--odn-tear) + 1px) no-repeat;
+}
+
+/* Torn paper edge (top). */
+.is-style-torn-edge-top {
+	--odn-tear: 18px;
+	-webkit-mask:
+		url(../images/torn-edge-top.svg) top left / 600px var(--odn-tear) repeat-x,
+		linear-gradient(#000 0 0) bottom left / 100% calc(100% - var(--odn-tear) + 1px) no-repeat;
+	mask:
+		url(../images/torn-edge-top.svg) top left / 600px var(--odn-tear) repeat-x,
+		linear-gradient(#000 0 0) bottom left / 100% calc(100% - var(--odn-tear) + 1px) no-repeat;
+}
+
+/* "D E S K  N E T W O R K" lettering. */
+.is-style-wide-caps,
+.is-style-wide-caps a {
+	text-transform: uppercase;
+	letter-spacing: 0.3em;
+	font-weight: 500;
+}
+
+/* Rules in brand yellow. */
+.wp-block-separator:not(.is-style-dots) {
+	border: 0;
+	border-top: 2px solid currentColor;
+	opacity: 1;
+}
+.wp-block-separator.is-style-thick {
+	border-top-width: 6px;
+}
+
+.wp-block-image.is-style-framed img {
+	border: 8px solid var(--wp--preset--color--base-2);
+	box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
+}
+
+/* ---------- Network badge ---------- */
+
+.wp-block-odn-network-badge.aligncenter {
+	text-align: center;
+}
+.wp-block-odn-network-badge.alignright {
+	text-align: right;
+}
+.wp-block-odn-network-badge .odn-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7em;
+	color: inherit;
+	text-decoration: none;
+}
+.wp-block-odn-network-badge .odn-badge__mark {
+	height: 2em;
+	width: auto;
+}
+.wp-block-odn-network-badge .odn-badge__text {
+	font-size: 0.75em;
+	font-weight: 500;
+	letter-spacing: 0.35em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+.wp-block-odn-network-badge .odn-badge:hover .odn-badge__text {
+	text-decoration: underline;
+}
+
+/* ---------- Post lists ---------- */
+
+.odn-card .wp-block-post-featured-image {
+	margin-bottom: var(--wp--preset--spacing--10);
+}
+.odn-card .wp-block-post-title {
+	margin-top: 0;
+}
+.odn-card .wp-block-post-excerpt__excerpt {
+	margin: 0;
+}
+.odn-post-list > li {
+	padding-top: var(--wp--preset--spacing--30);
+	border-top: 4px solid var(--wp--preset--color--accent);
+}
+
+/* ---------- Publisher directory (network home) ---------- */
+
+.odn-directory {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+	gap: var(--wp--preset--spacing--30);
+}
+.odn-directory__item {
+	display: flex;
+	gap: 1rem;
+	align-items: flex-start;
+	padding: var(--wp--preset--spacing--30);
+	background: var(--wp--preset--color--base-2);
+	border-top: 4px solid var(--wp--preset--color--accent);
+}
+.odn-directory__icon {
+	flex: none;
+	width: 56px;
+	height: 56px;
+	border-radius: 12px;
+	object-fit: cover;
+}
+.odn-directory__body {
+	min-width: 0;
+}
+.odn-directory__name {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--large);
+}
+.odn-directory__name a {
+	color: inherit;
+	text-decoration: none;
+}
+.odn-directory__name a:hover {
+	color: var(--wp--preset--color--highlight-dark);
+}
+.odn-directory__tagline,
+.odn-directory__latest {
+	margin: 0.35rem 0 0;
+	font-size: var(--wp--preset--font-size--small);
+}
+.odn-directory__tagline {
+	color: var(--wp--preset--color--muted);
+}
+.odn-directory__label {
+	display: block;
+	color: var(--wp--preset--color--muted);
+	font-weight: 500;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+}
