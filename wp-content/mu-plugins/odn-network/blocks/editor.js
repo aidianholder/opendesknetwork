@@ -58,4 +58,23 @@
 			return null;
 		},
 	} );
+
+	wp.blocks.registerBlockType( 'odn/join-form', {
+		apiVersion: 3,
+		title: __( 'Join Form', 'odn' ),
+		description: __( 'Application form for journalists. Submissions are emailed to the network and saved under Applications. Works on the main site only.', 'odn' ),
+		category: 'widgets',
+		icon: 'email-alt',
+		supports: { align: [ 'wide' ], spacing: { margin: true, padding: true } },
+		edit: function () {
+			return el(
+				'div',
+				useBlockProps(),
+				el( ServerSideRender, { block: 'odn/join-form' } )
+			);
+		},
+		save: function () {
+			return null;
+		},
+	} );
 } )( window.wp );

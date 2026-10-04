@@ -32,12 +32,18 @@ class ODN_Publisher_Command {
 	 * [--username=<login>]
 	 * : Login for a new user. Defaults to the subdomain.
 	 *
+	 * [--domain=<domain>]
+	 * : Full domain for the site, instead of <subdomain>.<network domain>.
+	 * Use when the network's own domain can't have subdomains (e.g. a
+	 * *.mystagingwebsite.com address).
+	 *
 	 * [--send-email]
 	 * : Email a new user a link to set their password.
 	 *
 	 * ## EXAMPLES
 	 *
 	 *     wp odn publisher create janedoe jane@example.com --name="Jane Doe" --send-email
+	 *     wp odn publisher create janedoe jane@example.com --domain=janedoe.sandbox.example.com
 	 *
 	 * @param array $args       Positional arguments.
 	 * @param array $assoc_args Flags.
@@ -57,7 +63,10 @@ class ODN_Publisher_Command {
 		}
 
 		$network = get_network();
-		$domain  = $subdomain . '.' . preg_replace( '/^www\./', '', $network->domain );
+		$domain  = strtolower( WP_CLI\Utils\get_flag_value( $assoc_args, 'domain', $subdomain . '.' . preg_replace( '/^www\./', '', $network->domain ) ) );
+		if ( ! preg_match( '/^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/', $domain ) ) {
+			WP_CLI::error( "'{$domain}' is not a valid domain." );
+		}
 		if ( domain_exists( $domain, $network->path, $network->id ) ) {
 			WP_CLI::error( "A site already exists at {$domain}." );
 		}
@@ -162,7 +171,8 @@ class ODN_Setup_Command {
 
 	/**
 	 * Sets up the network's main site: name, logo, home page with the publisher
-	 * directory, and a logo-only header. Safe to run more than once.
+	 * directory, About and Join pages, main menu, and a logo-only header. Safe
+	 * to run more than once.
 	 *
 	 * ## EXAMPLES
 	 *
@@ -213,6 +223,34 @@ class ODN_Setup_Command {
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', $home_id );
 
+		$about_id = $this->ensure_page( 'about', 'About', 'odn/page-about', 'page-no-title' );
+		$join_id  = $this->ensure_page( 'join', 'Join', 'odn/page-join', 'page-no-title' );
+
+		// Main menu. Navigation blocks without a ref fall back to the newest menu.
+		if ( ! get_page_by_path( 'main-menu', OBJECT, 'wp_navigation' ) ) {
+			$links = '';
+			foreach ( array( $about_id, $join_id ) as $page_id ) {
+				$links .= sprintf(
+					'<!-- wp:navigation-link {"label":"%s","type":"page","id":%d,"url":"%s","kind":"post-type"} /-->',
+					esc_attr( get_the_title( $page_id ) ),
+					$page_id,
+					esc_url( get_permalink( $page_id ) )
+				);
+			}
+			$nav_id = wp_insert_post(
+				wp_slash(
+					array(
+						'post_type'    => 'wp_navigation',
+						'post_status'  => 'publish',
+						'post_title'   => 'Main menu',
+						'post_name'    => 'main-menu',
+						'post_content' => $links,
+					)
+				)
+			);
+			WP_CLI::log( "Created main menu (#{$nav_id})." );
+		}
+
 		// The logo already spells the name, so the main site's header shows the logo alone.
 		$this->save_template_part(
 			'header',
@@ -230,6 +268,38 @@ class ODN_Setup_Command {
 		restore_current_blog();
 		odn_flush_publisher_sites_cache();
 		WP_CLI::success( 'Main site is set up.' );
+	}
+
+	/**
+	 * Creates a published page from a theme pattern unless one exists at that path.
+	 *
+	 * @param string $slug     Page slug.
+	 * @param string $title    Page title.
+	 * @param string $pattern  Pattern slug for the content.
+	 * @param string $template Page template slug.
+	 * @return int Page ID.
+	 */
+	private function ensure_page( $slug, $title, $pattern, $template ) {
+		$page = get_page_by_path( $slug );
+		if ( $page ) {
+			return $page->ID;
+		}
+		$id = wp_insert_post(
+			array(
+				'post_type'    => 'page',
+				'post_status'  => 'publish',
+				'post_title'   => $title,
+				'post_name'    => $slug,
+				'post_content' => sprintf( '<!-- wp:pattern {"slug":"%s"} /-->', $pattern ),
+			),
+			true
+		);
+		if ( is_wp_error( $id ) ) {
+			WP_CLI::error( $id );
+		}
+		update_post_meta( $id, '_wp_page_template', $template );
+		WP_CLI::log( "Created {$title} page (#{$id})." );
+		return $id;
 	}
 
 	/**

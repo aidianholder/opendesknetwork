@@ -161,3 +161,69 @@ body {
 	text-transform: uppercase;
 	font-size: 0.75rem;
 }
+
+/* ---------- Join form ---------- */
+
+.odn-join {
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+	padding: var(--wp--preset--spacing--40);
+	background: var(--wp--preset--color--base-2);
+	border-top: 4px solid var(--wp--preset--color--accent);
+}
+.odn-join__field {
+	display: grid;
+	gap: 0.35rem;
+	margin: 0;
+}
+.odn-join__field label {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 500;
+}
+.odn-join__required {
+	color: var(--wp--preset--color--highlight-dark);
+}
+.odn-join input,
+.odn-join textarea {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.65em 0.8em;
+	font: inherit;
+	color: var(--wp--preset--color--contrast);
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--subtle);
+	border-radius: 4px;
+}
+.odn-join input:focus,
+.odn-join textarea:focus {
+	border-color: var(--wp--preset--color--contrast);
+	outline: 3px solid var(--wp--preset--color--accent);
+	outline-offset: 0;
+}
+.odn-join__submit {
+	margin: var(--wp--preset--spacing--10) 0 0;
+}
+.odn-join__submit button {
+	border: 0;
+	cursor: pointer;
+}
+/* Honeypot: hidden from people, visible to naive bots. */
+.odn-join__hp {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+.odn-join__notice {
+	margin: 0 0 var(--wp--preset--spacing--20);
+	padding: var(--wp--preset--spacing--30);
+	border-left: 4px solid var(--wp--preset--color--accent);
+	background: var(--wp--preset--color--base-2);
+}
+.odn-join__notice.is-error {
+	border-left-color: var(--wp--preset--color--highlight);
+}
+.odn-join__notice h2 {
+	margin-top: 0;
+}

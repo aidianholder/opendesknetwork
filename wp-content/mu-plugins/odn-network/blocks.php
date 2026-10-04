@@ -3,7 +3,10 @@
  * Network blocks.
  *
  * odn/publisher-directory — lists the network's publisher sites with each one's
- * latest story. Server-rendered, so it needs no build step.
+ * latest story.
+ * odn/join-form — the "join the network" application form (see join.php).
+ *
+ * Both are server-rendered, so they need no build step.
  *
  * @package ODN_Network
  */
@@ -48,6 +51,24 @@ function odn_register_network_blocks() {
 			),
 			'editor_script'   => 'odn-network-blocks',
 			'render_callback' => 'odn_render_publisher_directory',
+		)
+	);
+
+	register_block_type(
+		'odn/join-form',
+		array(
+			'api_version'     => 3,
+			'title'           => 'Join Form',
+			'category'        => 'widgets',
+			'supports'        => array(
+				'align'   => array( 'wide' ),
+				'spacing' => array(
+					'margin'  => true,
+					'padding' => true,
+				),
+			),
+			'editor_script'   => 'odn-network-blocks',
+			'render_callback' => 'odn_render_join_form',
 		)
 	);
 }

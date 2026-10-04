@@ -486,6 +486,13 @@
 			]
 		},
 		{
+			"name": "page-no-title",
+			"title": "Page without title",
+			"postTypes": [
+				"page"
+			]
+		},
+		{
 			"name": "page-wide",
 			"title": "Wide page",
 			"postTypes": [

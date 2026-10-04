@@ -25,6 +25,7 @@ if ( ! defined( 'ODN_DEFAULT_THEME' ) ) {
 require ODN_NETWORK_DIR . '/roles.php';
 require ODN_NETWORK_DIR . '/sites.php';
 require ODN_NETWORK_DIR . '/blocks.php';
+require ODN_NETWORK_DIR . '/join.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require ODN_NETWORK_DIR . '/cli.php';
